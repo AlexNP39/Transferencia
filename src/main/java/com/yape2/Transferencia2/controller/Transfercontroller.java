@@ -2,6 +2,7 @@ package com.yape2.Transferencia2.controller;
 
 import com.yape2.Transferencia2.DTO.TransferDTO;
 import com.yape2.Transferencia2.entity.Transfer;
+import com.yape2.Transferencia2.exceptions.RequestException;
 import com.yape2.Transferencia2.service.ITransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,9 @@ public class Transfercontroller {
             transferService.validateTransfer(transferDTO);
             transferService.startTransfer(transferDTO);
             return new ResponseEntity<>("Transfer Success", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (RequestException ex) {
+            //return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new RequestException(ex.getCode(), ex.getStatus(), ex.getMessage());
         }
     }
 }

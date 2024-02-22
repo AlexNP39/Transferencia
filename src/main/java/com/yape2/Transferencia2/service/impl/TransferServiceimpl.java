@@ -6,12 +6,14 @@ import com.yape2.Transferencia2.Mapper.AccountMapper;
 import com.yape2.Transferencia2.Mapper.TransferMapper;
 import com.yape2.Transferencia2.entity.Account;
 import com.yape2.Transferencia2.entity.Transfer;
+import com.yape2.Transferencia2.exceptions.RequestException;
 import com.yape2.Transferencia2.repository.AccountRepository;
 import com.yape2.Transferencia2.repository.TransferRepository;
 import com.yape2.Transferencia2.service.IAccountService;
 import com.yape2.Transferencia2.service.ITransferService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -29,7 +31,7 @@ public class TransferServiceimpl implements ITransferService {
     private IAccountService accountService;
 
     @Override
-    public void startTransfer(TransferDTO transferDTO) throws BadRequestException {
+    public void startTransfer(TransferDTO transferDTO){
 
         AccountDTO sourceAccountDTO = accountService.getAccountBycellphone(transferDTO.getSourceAccount().getUser().getCellphone());
         AccountDTO destinationAccountDTO = accountService.getAccountBycellphone(transferDTO.getDestinationAccount().getUser().getCellphone());
@@ -56,10 +58,10 @@ public class TransferServiceimpl implements ITransferService {
                 transferRepository.save(transfer);
                 System.out.println("Transfer success");
             } else {
-                throw new BadRequestException("Insufficient balance in the source account");
+                throw new RequestException("51", HttpStatus.BAD_REQUEST,"Insufficient balance in the source account");
             }
         } else {
-            throw new BadRequestException("The account(s) do not exist");
+            throw new RequestException("52",HttpStatus.NOT_FOUND,"The account(s) do not exist");
         }
 
     }

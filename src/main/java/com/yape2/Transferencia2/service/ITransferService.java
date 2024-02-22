@@ -5,7 +5,7 @@ import com.yape2.Transferencia2.entity.Transfer;
 import org.apache.coyote.BadRequestException;
 
 public interface ITransferService {
-    void startTransfer(TransferDTO transferDTO) throws BadRequestException;
+    void startTransfer(TransferDTO transferDTO) throws RuntimeException;
 
     void validateTransfer(TransferDTO transferDTO);
 

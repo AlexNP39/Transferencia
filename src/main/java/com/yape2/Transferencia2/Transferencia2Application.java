@@ -3,6 +3,7 @@ package com.yape2.Transferencia2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication
 public class Transferencia2Application {
 
